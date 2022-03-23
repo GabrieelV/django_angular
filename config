@@ -1,0 +1,50 @@
+# .gitignore
+env
+.pytest_cache
+**/__pycache__
+
+
+# install pylint > pip install pylint
+## CTRL + SHIFT + P > Enable/Disable Linting
+## criar arquivo .pylintrc > pylint --generate-rcfile > .pylintrc
+## adicionar
+disable=
+      C0114 # missing-module-docstring
+# selecionar pylint > CTRL + SHIFT + P > Python: Select Linter > Pylint
+
+# Editar settings.json
+## adicionar
+
+    "files.exclude": {
+        "**/*.pyc": {"when": "$(basename).py"},
+        "**/__pycache__": true
+    }
+
+# install pre-commit > pip install pre-commit
+## Criar arquivo .pre-commit-config.yaml
+## Adicionar
+repos:
+-   repo: local
+    hooks:
+    - id: pytest
+      name: pytest
+      language: system
+      entry: pytest -v
+      always_run: true
+      pass_filenames: false
+      stages: [commit]
+-   repo: local
+    hooks:
+      - id: requirements
+        name: requirements
+        entry: bash -c 'env/bin/pip3 freeze > requirements.txt; git add requirements.txt'
+        language: system
+        pass_filenames: false
+        stages: [commit]
+# rodar "pre-commit install"
+
+#instalar pytest > pip install pytest
+# criar primeiro arquivo testes test_something com função
+# def test_something():
+#   ''' test something '''
+#   assert True is True
